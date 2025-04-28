@@ -1,0 +1,6 @@
+[submodule "se-project-17_soft-serve"]
+	path = se-project-17_soft-serve
+	url = https://github.com/2110503-2564/se-project-17_soft-serve.git
+[submodule "se-project-backend-17_soft-serve"]
+	path = se-project-backend-17_soft-serve
+	url = https://github.com/2110503-2564/se-project-backend-17_soft-serve.git
