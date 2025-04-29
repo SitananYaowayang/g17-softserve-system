@@ -1,34 +1,41 @@
-
-
+version: '3.8'
 services:
   frontend:
     build:
-      context: ./se-project-17_soft-serve  # ชี้ไปที่โฟลเดอร์ frontend ที่มี Dockerfile
+      context: ./se-project-17_soft-serve
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"  # พอร์ตสำหรับ frontend
+      - "3000:3000"
     environment:
       - NEXTAUTH_URL=http://localhost:3000
       - NEXTAUTH_SECRET=SoftServe_get_A_SoftEng
       - MONGO_URI=mongodb+srv://6733270421:ZMwKDw9RUd8HgGu0@swproject.wzbwwkg.mongodb.net/?retryWrites=true&w=majority&appName=SWProject
       - FRONTEND_URL=http://localhost:3000
-      - BACKEND_URL=http://backend:5000  # ตั้งค่าลิ้งค์ backend
+      - BACKEND_URL=http://backend:5000/
     depends_on:
-      - backend  # รัน backend ก่อน
+      - backend
+    networks:
+      - backend-network  # <== เพิ่มบรรทัดนี้
 
   backend:
     build:
-      context: ./se-project-backend-17_soft-serve  # ชี้ไปที่โฟลเดอร์ backend ที่มี Dockerfile
+      context: ./se-project-backend-17_soft-serve
       dockerfile: Dockerfile
+      no_cache: true
     ports:
-      - "5000:5000"  # พอร์ตสำหรับ backend
+      - "5000:5000"
     environment:
       - MONGO_URI=mongodb+srv://6733270421:ZMwKDw9RUd8HgGu0@swproject.wzbwwkg.mongodb.net/?retryWrites=true&w=majority&appName=SWProject
       - JWT_SECRET=SoftServe_get_A_SoftEng
+      - PORT=5000
+      - NODE_ENV=development
+      - JWT_EXPIRE=30d
+      - JWT_COOKIE_EXPIRE=30
+      - HOST=http://localhost
     volumes:
-      - ./backend:/usr/src/app  # เพื่อให้มีการ sync ระหว่างโค้ดใน local และ container
+      - ./se-project-backend-17_soft-serve:/usr/src/app
     networks:
-      - backend-network
+      - backend-network  # <== เพิ่มบรรทัดนี้
 
 networks:
   backend-network:
