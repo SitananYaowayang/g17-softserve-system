@@ -15,7 +15,7 @@ services:
     depends_on:
       - backend
     networks:
-      - backend-network  # <== เพิ่มบรรทัดนี้
+      - backend-network  
 
   backend:
     build:
@@ -34,8 +34,9 @@ services:
       - HOST=http://localhost
     volumes:
       - ./se-project-backend-17_soft-serve:/usr/src/app
+      - /usr/src/app/node_modules 
     networks:
-      - backend-network  # <== เพิ่มบรรทัดนี้
+      - backend-network  
 
 networks:
   backend-network:
